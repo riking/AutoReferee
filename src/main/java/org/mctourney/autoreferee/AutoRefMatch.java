@@ -2634,14 +2634,20 @@ public class AutoRefMatch implements Metadatable
 		if (ready) this.startMatch(MatchStartEvent.Reason.READY);
 	}
 
+	Runnable nextWinCheck = null;
 	/**
 	 * Checks if any team has satisfied the win conditions.
 	 */
 	public void checkWinConditions()
 	{
-		Plugin plugin = AutoReferee.getInstance();
-		plugin.getServer().getScheduler().runTask(plugin,
-			new Runnable(){ public void run(){ _checkWinConditions(); } });
+		if (nextWinCheck == null) {
+			nextWinCheck = new Runnable(){ public void run(){
+					_checkWinConditions();
+					nextWinCheck = null;
+				} };
+			Plugin plugin = AutoReferee.getInstance();
+			plugin.getServer().getScheduler().runTask(plugin, nextWinCheck);
+		}
 	}
 
 	private void _checkWinConditions()
