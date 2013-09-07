@@ -21,7 +21,8 @@ public class GoalsInventorySnapshot extends HashMap<BlockData, Integer>
 	public GoalsInventorySnapshot(Inventory inv, Set<BlockData> goals)
 	{
 		super();
-		for (BlockData goal : goals) {
+		for (BlockData goal : goals)
+		{
 			int count = itemSum(goal, inv.getContents());
 			if (count != 0) this.put(goal, count);
 		}
@@ -35,9 +36,11 @@ public class GoalsInventorySnapshot extends HashMap<BlockData, Integer>
 		return Maps.difference(this, other);
 	}
 
-	private static int itemSum(BlockData data, ItemStack[] items) {
+	private static int itemSum(BlockData data, ItemStack[] items)
+	{
 		int count = 0;
-		for (ItemStack it : items) {
+		for (ItemStack it : items)
+		{
 			if (it == null) continue;
 			if (data.equals(BlockData.fromItemStack(it)))
 				count += it.getAmount();
